@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { 
   Leaf, ArrowRight, BarChart3, Globe, Zap, Users, 
   ShieldCheck, Map, Cpu, MessageSquare, Mail, Github, Twitter,
-  Activity, Radio, Waves, Sparkles, Terminal, Database, ArrowUpRight
+  Activity, Radio, Waves, Sparkles, Terminal, Database, ArrowUpRight, UserCircle2, ShieldHalf
 } from 'lucide-react';
 import { Button } from "@/components/ui/button"; 
 import { Card, CardContent } from "@/components/ui/card";
@@ -67,7 +67,6 @@ const EcoMindHome = () => {
         
         <div className="hidden md:flex gap-8 text-[10px] font-black uppercase tracking-[0.2em] text-white/80 leading-none">
           <a href="#footer" className="hover:text-emerald-400 transition-colors">Contact</a>
-          {/* Added About link to navbar */}
           <Link href="/about" className="hover:text-emerald-400 transition-colors">About</Link>
           <Link href="/data" className="hover:text-emerald-400 transition-colors">Data</Link> 
           <a href="#features" className="hover:text-emerald-400 transition-colors">Ecosystem</a>
@@ -114,10 +113,18 @@ const EcoMindHome = () => {
             Turning fragments of community infrastructure data into high-fidelity narrative action plans via Generative Intelligence.
           </motion.p>
 
-          <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
-            <Button size="lg" className="bg-emerald-600 hover:bg-emerald-500 h-16 px-10 rounded-2xl text-lg font-black shadow-2xl shadow-emerald-200">
-              Get Started <ArrowRight className="ml-2" />
-            </Button>
+          {/* TWO BUTTON LAYOUT - Routing Updated */}
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <Link href="/resident">
+              <Button size="lg" className="bg-emerald-600 hover:bg-emerald-500 h-16 px-10 rounded-2xl text-lg font-black shadow-2xl shadow-emerald-200 border border-emerald-400/20 group">
+                <UserCircle2 className="mr-2 group-hover:scale-110 transition-transform" /> Residents
+              </Button>
+            </Link>
+            <Link href="/community">
+              <Button size="lg" variant="outline" className="bg-white/10 hover:bg-white/20 backdrop-blur-md h-16 px-10 rounded-2xl text-lg font-black text-white border-white/20 group shadow-2xl">
+                <ShieldHalf className="mr-2 group-hover:rotate-12 transition-transform" /> Community Leaders
+              </Button>
+            </Link>
           </div>
         </div>
       </section>

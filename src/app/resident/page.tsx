@@ -25,7 +25,7 @@ type Priority = 'high' | 'medium' | 'low';
 
 interface FormData {
   members: number;
-  children: number;
+  children: number; 
   adults: number;
   seniors: number;
   electricity: number;
