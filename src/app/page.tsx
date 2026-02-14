@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { 
   Leaf, ArrowRight, BarChart3, Globe, Zap, Users, 
@@ -8,7 +8,8 @@ import {
 } from 'lucide-react';
 import { Button } from "@/components/ui/button"; 
 import { Card, CardContent } from "@/components/ui/card";
-import Link from 'next/link'; // Import Link for internal navigation
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 // --- TypeScript Interfaces ---
 interface FeatureItemProps {
@@ -35,43 +36,62 @@ const FeatureItem = ({ icon, title, desc, className }: FeatureItemProps) => (
 
 const EcoMindHome = () => {
   const [isHovered, setIsHovered] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const router = useRouter();
+
+  // Check for authentication on mount
+  useEffect(() => {
+    const user = localStorage.getItem("userToken");
+    setIsLoggedIn(!!user);
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem("userToken"); // Clear the session
+    setIsLoggedIn(false);
+    router.push("/"); // Stay on home or refresh state
+  };
 
   return (
     <div className="relative min-h-screen bg-[#fcfdfc] overflow-x-hidden text-slate-900 selection:bg-emerald-200">
       
       {/* 1. TOP NAVBAR */}
       <nav className="fixed top-0 left-0 right-0 z-50 flex justify-between items-center px-8 py-4 max-w-7xl mx-auto mt-4 rounded-full border border-white/20 backdrop-blur-md bg-black/10 shadow-lg">
-        <div className="flex items-center gap-2 group cursor-pointer">
+        <Link href="/" className="flex items-center gap-2 group cursor-pointer">
           <div className="p-1.5 bg-emerald-600 rounded-lg text-white">
             <Leaf size={18} />
           </div>
-          <span className="font-black text-xl tracking-tighter uppercase italic text-white">
+          <span className="font-black text-xl tracking-tighter uppercase italic text-white leading-none">
             EcoMind<span className="text-emerald-400">AI</span>
           </span>
-        </div>
+        </Link>
         
-        <div className="hidden md:flex gap-8 text-[10px] font-black uppercase tracking-[0.2em] text-white/80">
+        <div className="hidden md:flex gap-8 text-[10px] font-black uppercase tracking-[0.2em] text-white/80 leading-none">
           <a href="#footer" className="hover:text-emerald-400 transition-colors">Contact</a>
-          {/* Added Data link to navbar */}
           <Link href="/data" className="hover:text-emerald-400 transition-colors">Data</Link> 
           <a href="#features" className="hover:text-emerald-400 transition-colors">Ecosystem</a>
         </div>
 
-        <Button className="rounded-full bg-emerald-500 hover:bg-emerald-400 text-emerald-950 font-black px-6 h-9 text-xs shadow-lg transition-all">
-          Login
-        </Button>
+        {/* Dynamic Login/Logout Button */}
+        {isLoggedIn ? (
+          <Button 
+            onClick={handleLogout}
+            className="rounded-full bg-rose-600 hover:bg-rose-500 text-white font-black px-6 h-9 text-xs shadow-lg transition-all leading-none"
+          >
+            Logout
+          </Button>
+        ) : (
+          <Link href="/login">
+            <Button className="rounded-full bg-emerald-500 hover:bg-emerald-400 text-emerald-950 font-black px-6 h-9 text-xs shadow-lg transition-all leading-none">
+              Login
+            </Button>
+          </Link>
+        )}
       </nav>
 
       {/* 2. HERO VIDEO BACKGROUND */}
       <section className="relative h-[90vh] w-full flex items-center overflow-hidden bg-slate-900">
         <div className="absolute inset-0 z-0">
-          <video 
-            autoPlay 
-            loop 
-            muted 
-            playsInline 
-            className="absolute inset-0 w-full h-full object-cover"
-          >
+          <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover">
             <source src="/Hero.mp4" type="video/mp4" />
           </video>
           <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent z-10" />
@@ -83,11 +103,7 @@ const EcoMindHome = () => {
             <span>NIT Patna ZeroHour '26 Special Deployment</span>
           </motion.div>
 
-          <motion.h1 
-            initial={{ y: 20, opacity: 0 }} 
-            animate={{ y: 0, opacity: 1 }}
-            className="text-6xl md:text-9xl font-black tracking-tighter mb-8 leading-[0.8] text-white drop-shadow-2xl"
-          >
+          <motion.h1 initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="text-6xl md:text-9xl font-black tracking-tighter mb-8 leading-[0.8] text-white drop-shadow-2xl">
             Heal the <br /> 
             <span className="text-emerald-400 italic font-serif font-light">Planet</span>.
           </motion.h1>
@@ -127,16 +143,16 @@ const EcoMindHome = () => {
                   Visioning <br/> <span className="text-emerald-500">Tomorrow.</span>
                 </h2>
 
-                <div className="space-y-6">
+                <div className="space-y-6 text-left">
                    <div className="p-6 bg-white/5 rounded-3xl border border-white/5 backdrop-blur-md">
-                      <p className="text-slate-400 font-mono text-xs leading-relaxed">
+                      <p className="text-slate-400 font-mono text-xs leading-relaxed italic">
                         <span className="text-emerald-500 font-bold">INSIGHT:</span> Neighborhood resource distribution analyzed. AI suggests habit-shifting toward renewable peaks for 14% efficiency gain.
                       </p>
                    </div>
                    
                    <div className="grid grid-cols-1 gap-6">
                       <div className="space-y-2">
-                        <div className="flex justify-between text-[9px] font-mono text-slate-500 uppercase tracking-[0.2em]">
+                        <div className="flex justify-between text-[9px] font-mono text-slate-500 uppercase tracking-[0.2em] leading-none">
                           <span>Current Sustainability Level</span>
                           <span className="text-emerald-400">85% OPTIMIZED</span>
                         </div>
@@ -145,7 +161,7 @@ const EcoMindHome = () => {
                         </div>
                       </div>
                       <div className="space-y-2">
-                        <div className="flex justify-between text-[9px] font-mono text-slate-500 uppercase tracking-[0.2em]">
+                        <div className="flex justify-between text-[9px] font-mono text-slate-500 uppercase tracking-[0.2em] leading-none">
                           <span>Community Engagement Rate</span>
                           <span className="text-blue-400">92% RELIABILITY</span>
                         </div>
@@ -162,8 +178,8 @@ const EcoMindHome = () => {
                    <motion.div animate={{ rotate: 360 }} transition={{ duration: 25, repeat: Infinity, ease: "linear" }} className="absolute inset-0 border-[3px] border-dashed border-emerald-500/10 rounded-full" />
                    <div className="text-center group-hover:scale-110 transition-transform">
                       <Waves className="text-emerald-500 mb-4 mx-auto" size={56} />
-                      <span className="block text-6xl font-black text-white">+34%</span>
-                      <span className="text-emerald-500/40 text-[10px] font-black uppercase tracking-[0.3em]">Projected Impact</span>
+                      <span className="block text-6xl font-black text-white leading-none">+34%</span>
+                      <span className="text-emerald-500/40 text-[10px] font-black uppercase tracking-[0.3em] leading-none mt-2 block">Projected Impact</span>
                    </div>
                 </div>
              </div>
@@ -211,69 +227,45 @@ const EcoMindHome = () => {
 
       {/* 6. Impact Ticker */}
       <section className="bg-emerald-600 py-10 overflow-hidden relative border-y-8 border-emerald-950">
-          <div className="flex gap-20 whitespace-nowrap animate-infinite-scroll font-black uppercase italic text-4xl text-white">
-            <span className="text-white">Plan for the future</span>
+          <div className="flex gap-20 whitespace-nowrap animate-infinite-scroll font-black uppercase italic text-4xl text-white leading-none">
+            <span>Plan for the future</span>
             <span className="text-emerald-950/20">99.2% AI Confidence</span>
-            <span className="text-white">12k+ Districts Mapped</span>
+            <span>12k+ Districts Mapped</span>
             <span className="text-emerald-950/20">Decentralized Power</span>
           </div>
       </section>
 
       {/* 7. REIMAGINED FOOTER */}
-      <footer id="footer" className="bg-slate-950 text-white pt-24 pb-8 overflow-hidden relative">
+      <footer id="footer" className="bg-slate-950 text-white pt-32 pb-16 border-t border-white/5 relative">
         <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-emerald-500/50 to-transparent" />
-        
-        <div className="max-w-7xl mx-auto px-8 grid md:grid-cols-12 gap-16 mb-20">
-          <div className="md:col-span-5 space-y-8">
-            <div className="flex items-center gap-2 group cursor-pointer">
-              <div className="p-2 bg-emerald-600 rounded-lg text-white transition-transform group-hover:rotate-12">
-                <Leaf size={24} />
-              </div>
-              <span className="text-3xl font-black tracking-tighter uppercase italic">EcoMind<span className="text-emerald-500">AI</span></span>
+        <div className="max-w-7xl mx-auto px-8 grid md:grid-cols-2 gap-32 pb-24 border-b border-white/5">
+          <div className="space-y-12 text-left">
+            <div className="flex items-center gap-3">
+              <Leaf size={32} className="text-emerald-500" />
+              <span className="text-4xl font-black uppercase italic tracking-tighter leading-none">EcoMind<span className="text-emerald-500">AI</span></span>
             </div>
-            <p className="text-slate-400 font-medium leading-relaxed max-w-md">
-              The first community-scale generative intelligence engine designed to bridge the gap between sensor data and human transformation. Built for the <span className="text-white">NIT Patna ZeroHour '26</span>.
+            <p className="text-slate-400 font-medium leading-relaxed max-w-md italic">
+              The first community-scale generative intelligence engine designed to bridge the gap between sensor data and human transformation. Built for the NIT Patna ZeroHour '26.
             </p>
-            <div className="flex gap-4">
-              <div className="flex items-center gap-2 px-4 py-2 bg-white/5 rounded-xl border border-white/10 hover:border-emerald-500/50 transition-colors cursor-pointer group">
-                <Github size={18} className="group-hover:text-emerald-400" />
-                <span className="text-xs font-bold uppercase tracking-widest">Source</span>
-              </div>
-              <div className="flex items-center gap-2 px-4 py-2 bg-white/5 rounded-xl border border-white/10 hover:border-emerald-500/50 transition-colors cursor-pointer group">
-                <Twitter size={18} className="group-hover:text-emerald-400" />
-                <span className="text-xs font-bold uppercase tracking-widest">Updates</span>
-              </div>
+            <div className="flex gap-8">
+              <Github size={28} className="text-white/20 hover:text-emerald-400 transition-colors cursor-pointer" />
+              <Twitter size={28} className="text-white/20 hover:text-emerald-400 transition-colors cursor-pointer" />
             </div>
           </div>
 
-          <div className="md:col-span-2 space-y-6">
-            <h5 className="text-[10px] font-black uppercase tracking-[0.3em] text-emerald-500">Environment</h5>
-            <ul className="space-y-4 text-xs font-bold text-slate-400">
-              <li className="hover:text-white transition-colors cursor-pointer flex items-center gap-2 font-mono italic tracking-tighter">/api_access</li>
-              <li className="hover:text-white transition-colors cursor-pointer flex items-center gap-2 font-mono italic tracking-tighter">/lab_logs</li>
-              <li className="hover:text-white transition-colors cursor-pointer flex items-center gap-2 font-mono italic tracking-tighter">/impact_map</li>
-            </ul>
-          </div>
-
-          <div className="md:col-span-5 space-y-6">
-            <h5 className="text-[10px] font-black uppercase tracking-[0.3em] text-emerald-500">System Status</h5>
-            <div className="p-6 bg-white/5 rounded-3xl border border-white/10 space-y-4">
-              <div className="flex justify-between items-center">
-                <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest italic font-mono">Server Instance: Patna_01</span>
-                <span className="flex h-2 w-2 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981]" />
+          <div className="space-y-10">
+            <h5 className="text-[12px] font-black uppercase tracking-[0.5em] text-emerald-500 leading-none">System_Architecture</h5>
+            <div className="p-10 bg-[#0a0a0a] rounded-[2.5rem] border border-white/10 flex justify-between items-center shadow-2xl">
+              <div className="space-y-2 font-mono uppercase italic tracking-widest text-left leading-none">
+                <p className="text-lg text-white font-black leading-none mb-1">Region_Patna_01</p>
+                <p className="text-[11px] text-emerald-500">Status: Optimized</p>
               </div>
-              <p className="text-sm font-bold tracking-tight text-slate-300">Ready for incoming community infrastructure data ingest.</p>
-              <div className="pt-2 flex items-center gap-2 text-emerald-400 text-xs font-black uppercase tracking-tighter cursor-pointer group">
-                Support Line: team@ecomind.ai <ArrowUpRight size={14} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-              </div>
+              <div className="flex h-4 w-4 rounded-full bg-emerald-500 shadow-[0_0_20px_#10b981] animate-pulse" />
             </div>
+            <p className="text-[10px] font-black text-white/10 uppercase tracking-[0.5em] pt-10 leading-none italic">
+                © 2026 // DEPLOYED BY LITTI CHOKERS // NITP_ZEROHOUR
+            </p>
           </div>
-        </div>
-
-        <div className="pt-8 border-t border-white/5 text-center">
-          <p className="text-[10px] font-black text-slate-600 uppercase tracking-[0.6em] animate-pulse">
-            © 2026 // DEPLOYED BY LITTI CHOKERS // NITP_ZEROHOUR
-          </p>
         </div>
       </footer>
     </div>
