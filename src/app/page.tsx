@@ -8,6 +8,7 @@ import {
 } from 'lucide-react';
 import { Button } from "@/components/ui/button"; 
 import { Card, CardContent } from "@/components/ui/card";
+import Link from 'next/link'; // Import Link for internal navigation
 
 // --- TypeScript Interfaces ---
 interface FeatureItemProps {
@@ -50,13 +51,14 @@ const EcoMindHome = () => {
         </div>
         
         <div className="hidden md:flex gap-8 text-[10px] font-black uppercase tracking-[0.2em] text-white/80">
-          <a href="#how" className="hover:text-emerald-400 transition-colors">Lab_Method</a>
+          <a href="#footer" className="hover:text-emerald-400 transition-colors">Contact</a>
+          {/* Added Data link to navbar */}
+          <Link href="/data" className="hover:text-emerald-400 transition-colors">Data</Link> 
           <a href="#features" className="hover:text-emerald-400 transition-colors">Ecosystem</a>
-          <a href="#stats" className="hover:text-emerald-400 transition-colors">Impact_Index</a>
         </div>
 
         <Button className="rounded-full bg-emerald-500 hover:bg-emerald-400 text-emerald-950 font-black px-6 h-9 text-xs shadow-lg transition-all">
-          Launch App
+          Login
         </Button>
       </nav>
 
@@ -78,7 +80,7 @@ const EcoMindHome = () => {
         <div className="relative z-20 w-full max-w-7xl mx-auto px-6 md:px-12 text-center pt-20">
           <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-emerald-400 text-[10px] font-black mb-10 tracking-[0.2em] uppercase">
             <Sparkles size={14} className="animate-pulse" />
-            <span>NIT Patna TechSprint '25 Special Deployment</span>
+            <span>NIT Patna ZeroHour '26 Special Deployment</span>
           </motion.div>
 
           <motion.h1 
@@ -96,16 +98,8 @@ const EcoMindHome = () => {
 
           <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
             <Button size="lg" className="bg-emerald-600 hover:bg-emerald-500 h-16 px-10 rounded-2xl text-lg font-black shadow-2xl shadow-emerald-200">
-              Start Visualization <ArrowRight className="ml-2" />
+              Get Started <ArrowRight className="ml-2" />
             </Button>
-            <div className="flex flex-col items-start border-l border-white/20 pl-6 text-left">
-               <div className="flex -space-x-2 mb-1">
-                 {[1,2,3].map(i => (
-                   <img key={i} className="w-8 h-8 rounded-full border-2 border-slate-900" src={`https://i.pravatar.cc/100?img=${i+20}`} alt="user" />
-                 ))}
-               </div>
-               <span className="text-[10px] font-black text-white/70 uppercase tracking-widest">400+ Nodes Active</span>
-            </div>
           </div>
         </div>
       </section>
@@ -125,7 +119,7 @@ const EcoMindHome = () => {
                    </div>
                    <div>
                       <h4 className="text-white font-bold tracking-tight">Ecosystem_Pulse_Monitor</h4>
-                      <p className="text-emerald-500/50 text-[10px] font-mono tracking-widest uppercase italic">Live Data Synthesis</p>
+                      <p className="text-emerald-500/50 text-[10px] font-mono tracking-widest uppercase italic">Live Insight Synthesis</p>
                    </div>
                 </div>
 
@@ -136,14 +130,14 @@ const EcoMindHome = () => {
                 <div className="space-y-6">
                    <div className="p-6 bg-white/5 rounded-3xl border border-white/5 backdrop-blur-md">
                       <p className="text-slate-400 font-mono text-xs leading-relaxed">
-                        <span className="text-emerald-500 font-bold">LOG:</span> Analyzing Sector 4 greywater runoff. AI suggests 14% efficiency gain via decentralized LoRa mesh integration.
+                        <span className="text-emerald-500 font-bold">INSIGHT:</span> Neighborhood resource distribution analyzed. AI suggests habit-shifting toward renewable peaks for 14% efficiency gain.
                       </p>
                    </div>
                    
                    <div className="grid grid-cols-1 gap-6">
                       <div className="space-y-2">
                         <div className="flex justify-between text-[9px] font-mono text-slate-500 uppercase tracking-[0.2em]">
-                          <span>Current Grid Load Efficiency</span>
+                          <span>Current Sustainability Level</span>
                           <span className="text-emerald-400">85% OPTIMIZED</span>
                         </div>
                         <div className="h-1.5 bg-slate-800 rounded-full overflow-hidden">
@@ -152,7 +146,7 @@ const EcoMindHome = () => {
                       </div>
                       <div className="space-y-2">
                         <div className="flex justify-between text-[9px] font-mono text-slate-500 uppercase tracking-[0.2em]">
-                          <span>Community Resource Sync</span>
+                          <span>Community Engagement Rate</span>
                           <span className="text-blue-400">92% RELIABILITY</span>
                         </div>
                         <div className="h-1.5 bg-slate-800 rounded-full overflow-hidden">
@@ -182,15 +176,14 @@ const EcoMindHome = () => {
         <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-24 items-center">
           <div>
             <h2 className="text-5xl md:text-7xl font-black tracking-tighter mb-8 leading-[0.85]">Our DNA. <br/> <span className="text-emerald-500 italic">Methodology.</span></h2>
-            <p className="text-slate-400 text-lg mb-12 font-medium leading-relaxed">We bridge the gap between "knowing" and "doing" by converting dry sensor data into human-centric blueprints.</p>
-            <Button variant="outline" className="border-emerald-500/30 text-emerald-500 hover:bg-emerald-500 hover:text-white rounded-xl h-14 px-8 font-black uppercase text-xs">Technical Paper</Button>
+            <p className="text-slate-400 text-lg mb-12 font-medium leading-relaxed">We bridge the gap between "knowing" and "doing" by converting dry environmental metrics into human-centric blueprints.</p>
           </div>
           <div className="grid grid-cols-2 gap-4">
              {[
-               { icon: <Map />, title: "Ingest", desc: "Local context acquisition." },
-               { icon: <Cpu />, title: "Reason", desc: "Gemini-driven modeling." },
+               { icon: <Map />, title: "Ingest", desc: "Local habit acquisition." },
+               { icon: <Cpu />, title: "Reason", desc: "Generative modeling." },
                { icon: <MessageSquare />, title: "Plan", desc: "Narrative vision output." },
-               { icon: <Globe />, title: "Sync", desc: "Global impact alignment." }
+               { icon: <Globe />, title: "Sync", desc: "Global climate alignment." }
              ].map((item, i) => (
                <div key={i} className="p-8 rounded-[2rem] bg-white/5 border border-white/5 hover:bg-white/10 transition-all">
                   <div className={`mb-4 text-emerald-500`}>{item.icon}</div>
@@ -208,27 +201,26 @@ const EcoMindHome = () => {
            <div className="h-[2px] w-20 bg-emerald-600 rounded-full" />
            <h2 className="text-3xl font-black uppercase tracking-widest text-emerald-950 italic">Ecosystem Features</h2>
         </div>
-        {/* Changed from md:grid-cols-3 and removed md:col-span-2 for symmetry */}
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
            <FeatureItem icon={<Globe />} title="Vision Planning" desc="AI-generated journey of your community's ecological future." />
-           <FeatureItem icon={<Users />} title="Personalization" desc="Hyper-local habit adjustment suggestions for residents." />
+           <FeatureItem icon={<Users />} title="Personalization" desc="Hyper-local lifestyle adjustment suggestions for residents." />
            <FeatureItem icon={<ShieldCheck />} title="Privacy Vault" desc="Encrypted data storage ensuring community safety." />
-           <FeatureItem icon={<BarChart3 />} title="Resilience Engine" desc="Forecast energy grid surges and climate shifts 6 months in advance." />
+           <FeatureItem icon={<BarChart3 />} title="Resilience Engine" desc="Forecast resource strain and climate shifts 6 months in advance." />
         </div>
       </section>
 
       {/* 6. Impact Ticker */}
       <section className="bg-emerald-600 py-10 overflow-hidden relative border-y-8 border-emerald-950">
-         <div className="flex gap-20 whitespace-nowrap animate-infinite-scroll font-black uppercase italic text-4xl">
-            <span className="text-white">99.2% AI Confidence</span>
-            <span className="text-emerald-950/20">Plan for the future</span>
+          <div className="flex gap-20 whitespace-nowrap animate-infinite-scroll font-black uppercase italic text-4xl text-white">
+            <span className="text-white">Plan for the future</span>
+            <span className="text-emerald-950/20">99.2% AI Confidence</span>
             <span className="text-white">12k+ Districts Mapped</span>
             <span className="text-emerald-950/20">Decentralized Power</span>
-         </div>
+          </div>
       </section>
 
       {/* 7. REIMAGINED FOOTER */}
-      <footer className="bg-slate-950 text-white pt-24 pb-8 overflow-hidden relative">
+      <footer id="footer" className="bg-slate-950 text-white pt-24 pb-8 overflow-hidden relative">
         <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-emerald-500/50 to-transparent" />
         
         <div className="max-w-7xl mx-auto px-8 grid md:grid-cols-12 gap-16 mb-20">
@@ -240,7 +232,7 @@ const EcoMindHome = () => {
               <span className="text-3xl font-black tracking-tighter uppercase italic">EcoMind<span className="text-emerald-500">AI</span></span>
             </div>
             <p className="text-slate-400 font-medium leading-relaxed max-w-md">
-              The first community-scale generative intelligence engine designed to bridge the gap between sensor data and human transformation. Built for the <span className="text-white">NIT Patna TechSprint '25</span>.
+              The first community-scale generative intelligence engine designed to bridge the gap between sensor data and human transformation. Built for the <span className="text-white">NIT Patna ZeroHour '26</span>.
             </p>
             <div className="flex gap-4">
               <div className="flex items-center gap-2 px-4 py-2 bg-white/5 rounded-xl border border-white/10 hover:border-emerald-500/50 transition-colors cursor-pointer group">
@@ -257,9 +249,9 @@ const EcoMindHome = () => {
           <div className="md:col-span-2 space-y-6">
             <h5 className="text-[10px] font-black uppercase tracking-[0.3em] text-emerald-500">Environment</h5>
             <ul className="space-y-4 text-xs font-bold text-slate-400">
-              <li className="hover:text-white transition-colors cursor-pointer flex items-center gap-2"><Database size={12}/> API Access</li>
-              <li className="hover:text-white transition-colors cursor-pointer flex items-center gap-2"><Terminal size={12}/> Lab Logs</li>
-              <li className="hover:text-white transition-colors cursor-pointer flex items-center gap-2"><Activity size={12}/> Impact Map</li>
+              <li className="hover:text-white transition-colors cursor-pointer flex items-center gap-2 font-mono italic tracking-tighter">/api_access</li>
+              <li className="hover:text-white transition-colors cursor-pointer flex items-center gap-2 font-mono italic tracking-tighter">/lab_logs</li>
+              <li className="hover:text-white transition-colors cursor-pointer flex items-center gap-2 font-mono italic tracking-tighter">/impact_map</li>
             </ul>
           </div>
 
@@ -280,7 +272,7 @@ const EcoMindHome = () => {
 
         <div className="pt-8 border-t border-white/5 text-center">
           <p className="text-[10px] font-black text-slate-600 uppercase tracking-[0.6em] animate-pulse">
-            © 2026 // DEPLOYED BY CHOKERS_TEAM // NITP_TECHSPRINT
+            © 2026 // DEPLOYED BY LITTI CHOKERS // NITP_ZEROHOUR
           </p>
         </div>
       </footer>
