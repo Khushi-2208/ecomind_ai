@@ -67,6 +67,8 @@ const EcoMindHome = () => {
         
         <div className="hidden md:flex gap-8 text-[10px] font-black uppercase tracking-[0.2em] text-white/80 leading-none">
           <a href="#footer" className="hover:text-emerald-400 transition-colors">Contact</a>
+          {/* Added About link to navbar */}
+          <Link href="/about" className="hover:text-emerald-400 transition-colors">About</Link>
           <Link href="/data" className="hover:text-emerald-400 transition-colors">Data</Link> 
           <a href="#features" className="hover:text-emerald-400 transition-colors">Ecosystem</a>
         </div>
