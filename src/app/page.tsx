@@ -8,6 +8,7 @@ import {
 } from 'lucide-react';
 import { Button } from "@/components/ui/button"; 
 import { Card, CardContent } from "@/components/ui/card";
+import Link from 'next/link'; // Import Link for internal navigation
 
 // --- TypeScript Interfaces ---
 interface FeatureItemProps {
@@ -51,6 +52,8 @@ const EcoMindHome = () => {
         
         <div className="hidden md:flex gap-8 text-[10px] font-black uppercase tracking-[0.2em] text-white/80">
           <a href="#footer" className="hover:text-emerald-400 transition-colors">Contact</a>
+          {/* Added Data link to navbar */}
+          <Link href="/data" className="hover:text-emerald-400 transition-colors">Data</Link> 
           <a href="#features" className="hover:text-emerald-400 transition-colors">Ecosystem</a>
         </div>
 
