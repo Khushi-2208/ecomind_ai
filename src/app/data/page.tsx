@@ -1,12 +1,13 @@
 "use client";
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { 
   Leaf, ArrowRight, Sparkles, Github, Twitter, 
   Droplets, Globe, ScrollText, Play
 } from 'lucide-react';
 import { Button } from "@/components/ui/button"; 
-import Link from 'next/link'; // Added Link for navigation
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 // --- Refined Minimal Gauge ---
 const MinimalGauge = ({ percentage, color, label }: any) => {
@@ -61,11 +62,27 @@ const EditorialBar = ({ label, misuse, optimized, unit }: any) => (
   </div>
 );
 
-const EcoMindHome = () => {
+const DataVisualPage = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const router = useRouter();
+
+  // 1. Correct Logout/Login State Check
+  useEffect(() => {
+    const user = localStorage.getItem("userToken");
+    setIsLoggedIn(!!user);
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem("userToken");
+    setIsLoggedIn(false);
+    // Hard redirect to root to clear all component states
+    window.location.href = "/";
+  };
+
   return (
     <div className="relative min-h-screen bg-[#0f0f0f] overflow-x-hidden text-stone-200 selection:bg-emerald-900/30 font-sans">
       
-      {/* 1. NAV — Brand now links to Root */}
+      {/* 1. NAV — Dynamically toggles Login/Logout */}
       <nav className="fixed top-0 left-0 right-0 z-50 flex justify-between items-center px-10 py-8 max-w-7xl mx-auto">
         <Link href="/" className="flex items-center gap-3 group transition-opacity hover:opacity-80">
           <Leaf size={20} className="text-emerald-500" />
@@ -74,12 +91,23 @@ const EcoMindHome = () => {
           </span>
         </Link>
 
-        <Button variant="outline" className="rounded-full border-stone-800 bg-transparent hover:bg-stone-100 hover:text-black text-white px-8 h-10 text-[10px] font-bold uppercase tracking-widest transition-all">
-          Login
-        </Button>
+        {isLoggedIn ? (
+          <Button 
+            onClick={handleLogout}
+            className="rounded-full bg-rose-600 hover:bg-rose-500 text-white font-black px-8 h-10 text-[10px] font-bold uppercase tracking-widest transition-all"
+          >
+            Logout
+          </Button>
+        ) : (
+          <Link href="/login">
+            <Button variant="outline" className="rounded-full border-stone-800 bg-transparent hover:bg-stone-100 hover:text-black text-white px-8 h-10 text-[10px] font-bold uppercase tracking-widest transition-all">
+              Login
+            </Button>
+          </Link>
+        )}
       </nav>
 
-      {/* 2. SOPHISTICATED HERO */}
+      {/* 2. SOPHISTICATED HERO — "Try Now" Removed */}
       <section className="relative h-[85vh] w-full flex flex-col items-center justify-center px-6 pt-20">
         <div className="absolute inset-0 opacity-10 pointer-events-none">
           <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(#2e2e2e_1px,transparent_1px)] [background-size:40px_40px]" />
@@ -104,9 +132,7 @@ const EcoMindHome = () => {
             <Button className="bg-emerald-600 hover:bg-emerald-500 text-white rounded-full px-10 h-14 font-bold text-xs uppercase tracking-[0.2em] shadow-xl transition-all">
               Explore the Impact <ArrowRight className="ml-2" size={16} />
             </Button>
-            <Button className="bg-emerald-600 hover:bg-emerald-500 text-white rounded-full px-10 h-14 font-bold text-xs uppercase tracking-[0.2em] shadow-xl transition-all">
-              Try Now <Play className="ml-2 fill-white" size={14} />
-            </Button>
+            {/* Try Now Button Removed here */}
           </div>
         </motion.div>
       </section>
@@ -210,4 +236,4 @@ const EcoMindHome = () => {
   );
 };
 
-export default EcoMindHome;
+export default DataVisualPage;
